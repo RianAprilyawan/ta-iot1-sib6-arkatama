@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +20,34 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('layouts/dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', function () {
+    return view('layouts/pages/sensor');
+})->middleware(['auth', 'verified'])->name('sensor');
+
+Route::get('/dashboard', function () {
+    return view('layouts/pages/led-control');
+})->middleware(['auth', 'verified'])->name('led-control');
+
+Route::get('/dashboard', function () {
+    return view('layouts/pages/Pengguna');
+})->middleware(['auth', 'verified'])->name('pengguna');
+
+// Route::get('/sensor', 'SensorController@index');
+
+// Route::get('/sensor', function () {
+//     return view('layouts/sensor'); // Halaman Sensor
+// });
+
+// Route::post('/led-control', function () {
+//     return view('layouts/led-control'); // Halaman LED Control
+// });
+
+// Route::get('layouts/user', function () {
+//     return view('layouts/user'); // Halaman Pengguna
+// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

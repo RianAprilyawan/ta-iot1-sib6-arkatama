@@ -9,6 +9,7 @@
         <div class="sign-in-from">
           <h1 class="mb-0">Sign in</h1>
           <p>Enter your email address and password to access admin panel.</p>
+@include('layouts.alerts.danger-alerts')
           <form class="mt-4" action="{{route('login')}}" method="post">
             @csrf
 

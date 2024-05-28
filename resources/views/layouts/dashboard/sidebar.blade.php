@@ -17,7 +17,7 @@
       <ul id="iq-sidebar-toggle" class="iq-menu">
         <li class="iq-menu-title"><i class="ri-separator"></i><span>Main</span></li>
         <li>
-          <a href="dashboard.html" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
+          <a href="#dashboard" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
         </li>
         <li>
           <a href="user.html" class="iq-waves-effect"><i class="ri-user-line"></i><span>User</span></a>

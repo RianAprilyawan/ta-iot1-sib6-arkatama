@@ -1,60 +1,173 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Models\User;
+use DataTables;
+use Carbon\Carbon;
+use Hash;
 
-class ProfileController extends Controller
+class UserController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Display a listing of the resource.
      */
-    public function edit(Request $request): View
+    public function index()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $users = User::all();
+
+        return DataTables::of($users)
+            ->addColumn('action', function ($item) {
+                return '<a class="btn btn btn-sm bg-primary" data-toggle="modal" data-target="#viewModal'.$item->id.'".><i class="far fa-eye p-1" style="color: white"></i></a>
+                        <a class="btn btn btn-sm bg-warning" data-toggle="modal" data-target="#editModal'.$item->id.'".><i class="far fa-edit p-1" style="color: white"></i></a>
+                        <a class="btn btn btn-sm bg-danger" data-toggle="modal" data-target="#deleteModal'.$item->id.'".><i class="fas fa-trash p-1" style="color: white"></i></a>';
+            })
+            ->addColumn('created_at', function ($item) {
+                return Carbon::parse($item->created_at)->format('Y-m-d H:i:s');
+            })
+            ->addColumn('updated_at', function ($item) {
+                return Carbon::parse($item->updated_at)->format('Y-m-d H:i:s');
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
-     * Update the user's profile information.
+     * Store a newly created resource in storage.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->user()->fill($request->validated());
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:8|confirmed',
+            ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+
+            $message = 'Add new user success';
+            $success = true;
+            $data = addResponseData($user, $message, $success);
+            return response()->json($data, 201);
+        } catch (\Exception $e) {
+            $result = [
+                'message' => $e->getMessage(),
+                'success' => false
+            ];
+            return response()->json($result, 500);
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
+     /**
+     * Display the specified resource.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function show(string $id)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        try {
+            $user = User::find($id);
+            if ($user) {
+                $message = 'Get user details success';
+                $success = true;
+                $data = getResponseData($user, $message, $success);
+                return response()->json($data, 200);
+            } else {
+                $message = 'User not found';
+                $success = false;
+                $data = getResponseData($user, $message, $success);
+                return response()->json($data, 404);
+            }
+        } catch (\Exception $e) {
+            $result = [
+                'message' => $e->getMessage(),
+                'success' => false
+            ];
+            return response()->json($result, 500);
+        }
+    }
 
-        $user = $request->user();
 
-        Auth::logout();
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        try {
+            $user = User::find($id);
 
-        $user->delete();
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'password' => 'nullable|min:8',
+                'password_confirmation' => 'nullable|required_with:password|same:password',
+            ]);
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            if ($user) {
+                if ($request->filled('password') && $request->filled('password_confirmation')) {
+                    $user->update([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                    ]);
+                } else {
+                    $user->update([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                    ]);
+                }
+                $message = 'Update user success';
+                $success = true;
+                $data = updateResponseData($user, $message, $success);
+                return response()->json($data, 200);
+            } else {
+                $message = 'User not found';
+                $success = false;
+                $data = updateResponseData($user, $message, $success);
+                return response()->json($data, 404);
+            }
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
 
-        return Redirect::to('/');
+            return response()->json($result, 500);
+        }
+    }
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $user = User::find($id);
+            if ($user) {
+                $user->delete();
+                $result = [
+                    'message' => 'Delete user success',
+                    'success' => true,
+                ];
+                return response()->json($result, 200);
+            } else {
+                $result = [
+                    'message' => 'user not found',
+                    'success' => false,
+                ];
+                return response()->json($result, 404);
+            }
+        } catch (\Exception $e) {
+            $result = [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($result, 500);
+        }
     }
 }

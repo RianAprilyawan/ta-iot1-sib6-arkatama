@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +20,27 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('layouts.dashboard');
+    $data['title'] = 'Dashboard';
+    $data['breadcrumbs'][]=[
+        'title' => 'Dashboard',
+        'url' => route('dashboard')
+        ];
+        $data['breadcrumbs'][]=[
+            'title' => 'Users',
+            'url' => route('users.index')
+            ];
+
+
+return view('layouts.pages.dashboard', $data);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('layouts/dashboar.coba');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('/user', function () {
-//     return view('layouts.user');
-// })->name('user');
+Route::get('layouts/pengguna', function () {
+    return view('layouts.pages.pengguna');
+})->name('pengguna');
 
 // Route::get('/led-control', function () {
 //     return view('led-control');
@@ -44,6 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+     //Users
+ Route::get('users', [UserController::class, 'index'])->name('users.index');
 });
+
+
+
 
 require __DIR__.'/auth.php';

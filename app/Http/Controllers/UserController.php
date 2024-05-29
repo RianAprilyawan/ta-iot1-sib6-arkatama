@@ -22,8 +22,8 @@ class UserController extends Controller
             'url' => 'users.index'
             ];
 
-            $users = User::orderBy('name')->get();
-            $data['users'] = $users;
+            $user = User::orderBy('name')->get();
+            $data['users'] = $user;
 
         return view('layouts/pages/user/index', $data);
     }

@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\UserController as ControllersUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,6 @@ Route::apiResource('/user', ProfileController::class);
 
 
 Route::get('/user', [ProfileController::class, 'index']);
+
+//CRUD
+Route::resource('users', UserController::class);

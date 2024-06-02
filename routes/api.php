@@ -27,4 +27,10 @@ Route::apiResource('/user', ProfileController::class);
 Route::get('/user', [ProfileController::class, 'index']);
 
 //CRUD
-Route::resource('users', UserController::class);
+// Route::resource('users', UserController::class);
+
+//route group name api
+
+Route::group(['as' => 'api.'], function () {
+    Route::resource('users', UserController::class);
+});

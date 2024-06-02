@@ -22,7 +22,7 @@ class UserController extends Controller
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
-            'password_confirmation' => 'required|same:password',
+            // 'password_confirmation' => 'required|same:password',
         ]);
 
         $user = User::create([

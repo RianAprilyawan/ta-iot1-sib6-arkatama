@@ -30,7 +30,9 @@ Route::get('/user', [ProfileController::class, 'index']);
 // Route::resource('users', UserController::class);
 
 //route group name api
-
+// route group name api
 Route::group(['as' => 'api.'], function () {
-    Route::resource('users', UserController::class);
+    // resource route
+    Route::resource('users', UserController::class)
+        ->except(['create', 'edit']);
 });

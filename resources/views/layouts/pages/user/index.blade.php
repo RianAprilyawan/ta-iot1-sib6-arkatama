@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.dashboard')
 
 @section('content')
     <div class="iq-card">
@@ -7,7 +7,7 @@
                 <h4 class="card-title">User List</h4>
             </div>
             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addModal">
-                <i class="las la-plus"></i></i>Tambah
+                <i class="las la-user-plus"></i>Tambah
             </button>
         </div>
         <div class="iq-card-body">
@@ -27,7 +27,7 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at->format('d M Y H:i:s') }}</td>
+                                <td>{{ $user->created_at->format('d M Y, H:i:s') }}</td>
                                 <td>
                                     <div class="flex align-items-center list-user-action">
                                         <a data-toggle="tooltip" data-placement="top" title=""
@@ -44,6 +44,10 @@
             </div>
         </div>
     </div>
+
+    <!-- Button trigger modal -->
+
+
     <!-- Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -58,67 +62,126 @@
                     <form>
                         <div class="form-group">
                             <label for="addName">Nama</label>
-                            <input type="text" class="form-control" id="addName" name="name">
+                            <input type="text" class="form-control" id="addName" name="name" >
                         </div>
-
                         <div class="form-group">
                             <label for="addEmail">Email</label>
-                            <input type="email" class="form-control" id="addEmail" name="name">
+                            <input type="email" class="form-control" id="addEmail" name="email" >
                         </div>
-
                         <div class="form-group">
                             <label for="addPassword">Password</label>
-                            <input type="Password" class="form-control" id="addPassword" name="Password">
+                            <input type="password" class="form-control" id="addPassword" name="password" >
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" onclick="createUser" >Simpan</button>
+                    <button type="button" class="btn btn-primary" onclick="createUser()">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="editmodalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editmodalLabel">Ubah Pengguna</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="addName">Nama</label>
+                                <input type="text" class="form-control" id="addName" name="name" >
+                            </div>
+                            <div class="form-group">
+                                <label for="addEmail">Email</label>
+                                <input type="email" class="form-control" id="addEmail" name="email" >
+                            </div>
+                            <div class="form-group">
+                                <label for="addPassword">Password</label>
+                                <input type="password" class="form-control" id="addPassword" name="password" >
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" onclick="createUser()">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection
 
 @push('scripts')
     <script>
-
-    //   toastr.success("My name is Inigo Montoya. You killed my father. Prepare to die!")
-
+        //toastr.success('Have fun storming the castle!', 'Miracle Max Says')
         function createUser() {
-
             const url = "{{ route('api.users.store') }}";
+
             // ambil form data
             let data = {
                 name: $('#addName').val(),
                 email: $('#addEmail').val(),
-                password: $('#addPassword').val()
+                password: $('#addPassword').val(),
             }
 
-            // kirim data ke server POST / users
-            $.post('url', data)
+            // kirim data ke server POST /users
+            $.post(url, data)
                 .done((response) => {
-                    // jika berhasil
+                    // tampilkan pesan sukses
                     toastr.success(response.message, 'Sukses')
 
-                    // reload halaman
+                    // reload halaman setelah 3 detik
                     setTimeout(() => {
                         location.reload()
                     }, 3000);
                 })
                 .fail((error) => {
-                    toastr.error('user gagal ditambahkan', 'Error')
+                    // ambil response error
+                    let response = error.responseJSON
 
+                    // tampilkan pesan error
+                    toastr.error(response.message, 'Error')
+
+                    // tampilkan error validation
+                    if (response.errors) {
+                        // loop object errors
+                        for (const error in response.errors) {
+                            // cari input name yang error pada #addForm
+                            let input = $(`#addForm input[name="${error}"]`)
+
+                            // tambahkan class is-invalid pada input
+                            input.addClass('is-invalid');
+
+                            // buat elemen class="invalid-feedback"
+                            let feedbackElement = `<div class="invalid-feedback">`
+                            feedbackElement += `<ul class="list-unstyled">`
+                            response.errors[error].forEach((message) => {
+                                feedbackElement += `<li>${message}</li>`
+                            })
+                            feedbackElement += `</ul>`
+                            feedbackElement += `</div>`
+
+                            // tambahkan class invalid-feedback setelah input
+                            input.after(feedbackElement)
+                        }
+                    }
                 })
         }
 
-        function editUser() {
+        function editUser(){
 
         }
 
-        function deleteUser() {
+        function deleteUser(){
 
         }
+
+        function openEditModal ()
     </script>
 @endpush

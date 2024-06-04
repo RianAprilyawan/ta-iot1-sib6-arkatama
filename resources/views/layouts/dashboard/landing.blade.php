@@ -54,7 +54,7 @@
         <!-- <a class="navbar-brand logo-text page-scroll" href="index.html">Evolo</a> -->
 
         <!-- Image Logo -->
-        <a class="navbar-brand logo-image" href="index.html"><img src="images/logo.svg" alt="alternative"></a>
+        {{-- <a class="navbar-brand logo-image" href="index.html"><img src="images/arkatama1.svg" alt="alternative"></a> --}}
 
         <!-- Mobile Menu Toggle Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -120,7 +120,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="text-container">
-                            <h1><span class="turquoise">Selamat Datang </span> Internet Of Things </h1>
+                            <h1><span class="turquoise">Selamat Datang </span> Welcome Welcome </h1>
                             <p class="p-large">Lorem ipsum is a placeholder text commonly used to demonstrate the visual
                                 form of a document or a typeface without relying on meaningful content.
                                 Lorem ipsum may be used as a placeholder before the final copy is available.</p>

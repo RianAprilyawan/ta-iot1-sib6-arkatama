@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MqSensor;
+use App\Service\WhatsappNotificationService;
 
 class MqSensorController extends Controller
 {
@@ -41,7 +42,14 @@ class MqSensorController extends Controller
                 'numeric',
             ]
         ]);
+         //notif massal
+
+         WhatsappNotificationService::notifikasikebocoranGasMassal ($request->value);
+         
         $sensorData = MqSensor::create($request->all());
+
+
+
 
         return response()
             ->json($sensorData, 201);

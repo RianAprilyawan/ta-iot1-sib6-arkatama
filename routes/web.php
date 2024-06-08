@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Service\WhatsappNotificationService;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,8 +57,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
+      Route::get('/whatsapp', function () {
+        $target = request('target');
+        $message = 'Ada kebocoran gas di rumah anda, segera cek dan perbaiki';
+        $response = WhatsappNotificationService::sendMessage($target, $message);
+        echo $response;
+    });
+
      //Users
  Route::get('users', [UserController::class, 'index'])->name('users.index');
+
+
 });
 
 

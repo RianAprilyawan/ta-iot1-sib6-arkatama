@@ -25,12 +25,22 @@
           <a href="{{ route('dashboard')}}" class="iq-waves-effect"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
         </li>
 
+
+        @if (auth()->user()->role == 'admin')
+        <li class="
+    @if (request()->url() == route('users.index')) active @endif
+    ">
+            <a href="{{ route('users.index') }}" class="iq-waves-effect"><i
+                    class="ri-user-5-fill"></i><span>Pengguna</span></a>
+        </li>
+    @endif
+
         <li class="
         @if (request()->url() == route('users.index'))
             active
         @endif
         ">
-          <a href="{{ route('users.index')}}" class="iq-waves-effect"><i class="ri-user-line"></i><span>User</span></a>
+
         </li>
 
         <li class="

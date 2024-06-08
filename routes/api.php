@@ -38,6 +38,7 @@ Route::group(['as' => 'api.'], function () {
         ->except(['create', 'edit']);
 
 
-        Route::resource('sensors/mq', MqSensorController::class);
+        Route::resource('sensors/mq', MqSensorController::class)
+        ->names('sensors.mq');
 });
 

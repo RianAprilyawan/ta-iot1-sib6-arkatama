@@ -15,7 +15,10 @@ class MqSensorController extends Controller
             ->limit(20)
             ->get();
 
-        return response()->json($sensorData, 200);
+        return response()->json([
+            'data' => $sensorData,
+            'message' => 'Success'
+        ],200);
     }
 
     function show($id)

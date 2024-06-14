@@ -41,16 +41,15 @@ Route::group(['as' => 'api.'], function () {
         ->except(['create', 'edit']);
 
 
-        Route::resource('sensors/mq', MqSensorController::class)
+    Route::resource('sensors/mq', MqSensorController::class)
         ->names('sensors.mq');
 
-        Route::resource('sensors/dht11', RainSensorController::class)
-        ->names('sensors.dht11');
+    Route::get('sensors/dht11', [Dht11SensorController::class, 'index'])
+        ->name('sensors.dht11.index');
+    Route::post('sensors/dht11', [Dht11SensorController::class, 'store']);
 
     Route::resource('sensors/rain', RainSensorController::class)
-    ->names('sensors.rain');
-
-
+        ->names('sensors.rain');
 });
 
 Route::prefix('v1/leds')->name('leds.')->group(function () {
@@ -60,5 +59,3 @@ Route::prefix('v1/leds')->name('leds.')->group(function () {
     Route::put('/{id}', [LedController::class, 'update'])->name('update');
     Route::delete('/{id}', [LedController::class, 'destroy'])->name('destroy');
 });
-
-

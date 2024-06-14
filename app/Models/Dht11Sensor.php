@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Dht11Sensor extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+
+    protected $fillable = ['humidity', 'temperature'];
 }

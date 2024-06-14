@@ -7,7 +7,6 @@
             <div class="card iq-mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Monitoring Sensor Gas</h4>
-                    {{-- <p class="card-text">Grafik berikut adalah monitoring sensor gas 3 menit terakhir.</p> --}}
                     <div id="monitoringGas"></div>
                     <p class="card-text"><small class="text-muted">Terakhir diubah 3 menit lalu</small></p>
                 </div>
@@ -17,7 +16,6 @@
             <div class="card iq-mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Monitoring Sensor Gas</h4>
-                    {{-- <p class="card-text">Grafik berikut adalah monitoring sensor gas 3 menit terakhir.</p> --}}
                     <div id="gaugeGas"></div>
                     <p class="card-text"><small class="text-muted">Terakhir diubah 3 menit lalu</small></p>
                 </div>
@@ -29,7 +27,6 @@
             <div class="card iq-mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Monitoring Kelembaban (DHT11)</h4>
-                    {{-- <p class="card-text">Grafik berikut adalah monitoring kelembaban sensor DHT11 3 menit terakhir.</p> --}}
                     <div id="gaugeHumidity"></div>
                     <p class="card-text"><small class="text-muted">Terakhir diubah 3 menit lalu</small></p>
                 </div>
@@ -41,7 +38,6 @@
             <div class="card iq-mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Monitoring Suhu (DHT11)</h4>
-                    {{-- <p class="card-text">Grafik berikut adalah monitoring suhu sensor DHT11 3 menit terakhir.</p> --}}
                     <div id="gaugeTemperature"></div>
                     <p class="card-text"><small class="text-muted">Terakhir diubah 3 menit lalu</small></p>
                 </div>
@@ -53,7 +49,6 @@
             <div class="card iq-mb-3">
                 <div class="card-body">
                     <h4 class="card-title">Monitoring Sensor Hujan</h4>
-                    {{-- <p class="card-text">Grafik berikut adalah monitoring sensor hujan 3 menit terakhir.</p> --}}
                     <div id="gaugeRain"></div>
                     <p class="card-text"><small class="text-muted">Terakhir diubah 3 menit lalu</small></p>
                 </div>
@@ -103,7 +98,7 @@
                     gaugeGas.series[0].setData([Number(value)], true, true, true);
                 }
 
-                setTimeout(requestGaugeGas, 1000);
+                setTimeout(requestGaugeGas, 3000);
             }
         }
 
@@ -119,7 +114,7 @@
                     gaugeHumidity.series[0].setData([Number(humidity)], true, true, true);
                 }
 
-                setTimeout(requestGaugeHumidity, 1000);
+                setTimeout(requestGaugeHumidity, 3000);
             }
         }
 
@@ -135,7 +130,7 @@
                     gaugeTemperature.series[0].setData([Number(temperature)], true, true, true);
                 }
 
-                setTimeout(requestGaugeTemperature, 1000);
+                setTimeout(requestGaugeTemperature, 3000);
             }
         }
 
@@ -151,7 +146,7 @@
                     gaugeRain.series[0].setData([Number(value)], true, true, true);
                 }
 
-                setTimeout(requestGaugeRain, 1000);
+                setTimeout(requestGaugeRain, 3000);
             }
         }
 
@@ -206,8 +201,7 @@
                     center: ['50%', '75%'],
                     size: '110%'
                 },
-                 // the value axis
-                              yAxis: {
+                yAxis: {
                     min: 0,
                     max: 1000,
                     tickPixelInterval: 72,
@@ -275,7 +269,8 @@
                 }]
             });
 
-            gaugeHumidity = new Highcharts.Chart({
+            gaugeHumidity = new Highcharts.Chart
+            ({
                 chart: {
                     renderTo: 'gaugeHumidity',
                     type: 'gauge',
@@ -298,7 +293,6 @@
                     center: ['50%', '75%'],
                     size: '110%'
                 },
-                               // the value axis
                 yAxis: {
                     min: 0,
                     max: 1000,
@@ -332,7 +326,7 @@
                         color: '#DF5353', // red
                         thickness: 20,
                         borderRadius: '30%'
-                    } ]
+                    }]
 
                 },
                 series: [{
@@ -380,9 +374,9 @@
                         load: requestGaugeTemperature
                     }
                 },
-                 title: {
+                title: {
                     text: ''
-                 },
+                },
                 pane: {
                     startAngle: -90,
                     endAngle: 89.9,
@@ -390,7 +384,6 @@
                     center: ['50%', '75%'],
                     size: '110%'
                 },
-                               // the value axis
                 yAxis: {
                     min: 0,
                     max: 1000,
@@ -424,7 +417,7 @@
                         color: '#DF5353', // red
                         thickness: 20,
                         borderRadius: '30%'
-                    } ]
+                    }]
                 },
                 series: [{
                     name: 'Temperature',
@@ -481,8 +474,7 @@
                     center: ['50%', '75%'],
                     size: '110%'
                 },
-                               // the value axis
-                               yAxis: {
+                yAxis: {
                     min: 0,
                     max: 1000,
                     tickPixelInterval: 72,
@@ -515,7 +507,7 @@
                         color: '#DF5353', // red
                         thickness: 20,
                         borderRadius: '30%'
-                    } ]
+                    }]
                 },
                 series: [{
                     name: 'Rain',
@@ -548,6 +540,13 @@
                     }
                 }]
             });
+
+            // Start fetching data immediately
+            requestData();
+            requestGaugeGas();
+            requestGaugeHumidity();
+            requestGaugeTemperature();
+            requestGaugeRain();
         });
     </script>
 @endpush

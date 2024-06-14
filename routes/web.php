@@ -52,6 +52,15 @@ Route::get('layouts/pengguna', function () {
 //     return view('layouts/sensor');
 // })->name('sensor');
 
+Route::get('/sensor', function () {
+    $data['title'] = 'Sensor';
+    $data['breadcrumbs'][]= [
+        'title' => 'Sensor',
+        'url' => route('sensor.index')
+    ];
+    return view('layouts.pages.sensor', $data);
+})->middleware(['auth', 'verified'])->name('sensor.index');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

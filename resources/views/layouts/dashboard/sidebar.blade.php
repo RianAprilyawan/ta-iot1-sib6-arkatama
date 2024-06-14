@@ -49,13 +49,12 @@
               <a href="{{ route('led.index') }}" class="iq-waves-effect"><i
                       class="ri-lightbulb-fill"></i><span>LED Control</span></a>
           </li>
-
           <li class="
-          @if (request()->url() == '#')
-              active
+          @if (request()->url() ==  route('sensor.index'))
+            active
           @endif
           ">
-            <a href="sensor.html" class="iq-waves-effect"><i class="ri-sensor-line"></i><span>Sensor</span></a>
+            <a href="{{ route('sensor.index')}}" class="iq-waves-effect"><i class="ri-sensor-line"></i><span>Sensor</span></a>
           </li>
         </ul>
       </nav>

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController as ControllersUserController;
 use App\Http\Controllers\Api\LedController;
+use App\Http\Controllers\Api\Dht11SensorController;
+use App\Http\Controllers\Api\RainSensorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,14 @@ Route::group(['as' => 'api.'], function () {
 
         Route::resource('sensors/mq', MqSensorController::class)
         ->names('sensors.mq');
+
+        Route::resource('sensors/dht11', RainSensorController::class)
+        ->names('sensors.dht11');
+
+    Route::resource('sensors/rain', RainSensorController::class)
+    ->names('sensors.rain');
+
+
 });
 
 Route::prefix('v1/leds')->name('leds.')->group(function () {

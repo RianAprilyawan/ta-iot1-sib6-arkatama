@@ -103,7 +103,7 @@
                     gaugeGas.series[0].setData([Number(value)], true, true, true);
                 }
 
-                setTimeout(requestGaugeGas, 1000);
+                setTimeout(requestGaugeGas, 3000);
             }
         }
 
@@ -119,7 +119,7 @@
                     gaugeHumidity.series[0].setData([Number(humidity)], true, true, true);
                 }
 
-                setTimeout(requestGaugeHumidity, 1000);
+                setTimeout(requestGaugeHumidity, 3000);
             }
         }
 
@@ -135,7 +135,7 @@
                     gaugeTemperature.series[0].setData([Number(temperature)], true, true, true);
                 }
 
-                setTimeout(requestGaugeTemperature, 1000);
+                setTimeout(requestGaugeTemperature, 3000);
             }
         }
 
@@ -151,7 +151,7 @@
                     gaugeRain.series[0].setData([Number(value)], true, true, true);
                 }
 
-                setTimeout(requestGaugeRain, 1000);
+                setTimeout(requestGaugeRain, 3000);
             }
         }
 

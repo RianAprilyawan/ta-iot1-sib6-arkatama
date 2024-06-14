@@ -219,17 +219,17 @@
                     lineWidth: 0,
                     plotBands: [{
                         from: 0,
-                        to: 550,
+                        to: 199,
                         color: '#55BF3B', // green
                         thickness: 20,
-                        borderRadius: '50%'
+                        borderRadius: '30%'
                     }, {
-                        from: 500,
-                        to: 850,
+                        from: 199,
+                        to: 299,
                         color: '#DDDF0D', // yellow
                         thickness: 20,
                     }, {
-                        from: 800,
+                        from: 299,
                         to: 1000,
                         color: '#DF5353', // red
                         thickness: 20,
@@ -311,17 +311,17 @@
                     lineWidth: 0,
                     plotBands: [{
                         from: 0,
-                        to: 550,
+                        to: 99,
                         color: '#55BF3B', // green
                         thickness: 20,
-                        borderRadius: '50%'
+                        borderRadius: '30%'
                     }, {
-                        from: 500,
-                        to: 850,
+                        from: 99,
+                        to: 300,
                         color: '#DDDF0D', // yellow
                         thickness: 20,
                     }, {
-                        from: 800,
+                        from: 300,
                         to: 1000,
                         color: '#DF5353', // red
                         thickness: 20,
@@ -402,17 +402,17 @@
                     lineWidth: 0,
                     plotBands: [{
                         from: 0,
-                        to: 550,
+                        to: 99,
                         color: '#55BF3B', // green
                         thickness: 20,
-                        borderRadius: '50%'
+                        borderRadius: '30%'
                     }, {
-                        from: 500,
-                        to: 850,
+                        from: 99,
+                        to: 300,
                         color: '#DDDF0D', // yellow
                         thickness: 20,
                     }, {
-                        from: 800,
+                        from: 300,
                         to: 1000,
                         color: '#DF5353', // red
                         thickness: 20,
@@ -492,17 +492,17 @@
                     lineWidth: 0,
                     plotBands: [{
                         from: 0,
-                        to: 550,
+                        to: 99,
                         color: '#55BF3B', // green
                         thickness: 20,
-                        borderRadius: '50%'
+                        borderRadius: '30%'
                     }, {
-                        from: 500,
-                        to: 850,
+                        from: 99,
+                        to: 300,
                         color: '#DDDF0D', // yellow
                         thickness: 20,
                     }, {
-                        from: 800,
+                        from: 300,
                         to: 1000,
                         color: '#DF5353', // red
                         thickness: 20,

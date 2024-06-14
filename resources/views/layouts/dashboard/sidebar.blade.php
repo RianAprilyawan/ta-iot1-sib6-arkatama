@@ -44,13 +44,12 @@
           </li>
 
           <li class="
-          @if (request()->url() == '#')
-              active
-          @endif
+          @if (request()->url() == route('leds.index')) active @endif
           ">
-            <a href="led-control.html" class="iq-waves-effect"><i class="ri-lightbulb-line"></i><span>LED
-                Control</span></a>
+              <a href="{{ route('led.index') }}" class="iq-waves-effect"><i
+                      class="ri-lightbulb-fill"></i><span>LED Control</span></a>
           </li>
+
           <li class="
           @if (request()->url() == '#')
               active

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Service\WhatsappNotificationService;
+use App\Http\Controllers\LedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,17 +23,17 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $data['title'] = 'Dashboard';
-    $data['breadcrumbs'][]=[
+    $data['breadcrumbs'][] = [
         'title' => 'Dashboard',
         'url' => route('dashboard')
-        ];
-        $data['breadcrumbs'][]=[
-            'title' => 'Users',
-            'url' => route('users.index')
-            ];
+    ];
+    $data['breadcrumbs'][] = [
+        'title' => 'Users',
+        'url' => route('users.index')
+    ];
 
 
-return view('layouts.pages.dashboard', $data);
+    return view('layouts.pages.dashboard', $data);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/dashboard', function () {
@@ -58,20 +59,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-      Route::get('/whatsapp', function () {
+    Route::get('/whatsapp', function () {
         $target = request('target');
         $message = 'Ada kebocoran gas di rumah anda, segera cek dan perbaiki';
         $response = WhatsappNotificationService::sendMessage($target, $message);
         echo $response;
     });
 
-     //Users
- Route::get('users', [UserController::class, 'index'])->name('users.index');
-
+    //Users
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
 
 });
 
 
+Route::controller(LedController::class)->group(function () {
+    Route::get('/leds', 'index')->name('led.index');
+    Route::post('/leds', 'store')->name('led.store');
+});
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
